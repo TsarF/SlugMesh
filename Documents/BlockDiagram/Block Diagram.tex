@@ -4,6 +4,8 @@
 \usepackage{pdflscape}
 \usepackage[margin=2cm]{geometry}
 \usepackage{caption}
+\usepackage{multirow}
+\usepackage{makecell}
 
 \usetikzlibrary{shapes,arrows,positioning,fit}
 
@@ -294,30 +296,34 @@
 \begin{table}[h]
 \centering
 \caption*{Option A}
-\begin{tabular}{|l|c|c|}
+\begin{tabular}{|l|c|c|c|}
 \hline
-\textbf{Component} & \textbf{Peak Current (mA)} & \textbf{Continuous Current (mA)} \\
+\textbf{Component} & \textbf{Part Number} & \textbf{Peak Current (mA)} & \textbf{Continuous Current (mA)} \\
 \hline
-MCU & & \\
+BLE & STM32WB05xN & 100 & 25 \\
 \hline
-RF Transceiver & & \\
+MCU & \multirow{2}{*}{STM32WLE5} & 100 & 25 \\
+\cline{1-1}\cline{3-4}
+RF Transceiver &   & 95 & 15 \\
 \hline
-RF Frontend & & \\
+RF Frontend & SKY66122 & 500 & 50 \\
 \hline
-BLE & & \\
+Battery Charger & BQ25887 & 200 & 5 \\
 \hline
-Battery Charger & & \\
+USB-PD & STUSB4500 & 30 & 8 \\
 \hline
-LDO & & \\
+USB-C & Generic & 10 & 2 \\
 \hline
-USB-PD & & \\
+USB to Serial & CP2102 & 80 & 20 \\
+\Xhline{5\arrayrulewidth}
+\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{150 mA} &  \textbf{150 mA} \\
 \hline
-USB to Serial & & \\
-\hline
-\textbf{Total} & \textbf{} & \textbf{} \\
-\hline
+
 \end{tabular}
 \end{table}
+
+\newpage
+\section{LDO Selection}
 
 
 \end{document}
