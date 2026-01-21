@@ -288,38 +288,97 @@
 
 
 
-
 \newpage
-\section{Power Consumption Analysis}
-\subsection{Component Current Requirements}
-
+\renewcommand{\thempfootnote}{\arabic{mpfootnote}}
 \begin{table}[h]
+\begin{minipage}{\textwidth}
 \centering
 \caption*{Option A}
-\begin{tabular}{|l|c|c|c|}
+\begin{tabular}{|l|c|c|c|c|}
 \hline
-\textbf{Component} & \textbf{Part Number} & \textbf{Peak Current (mA)} & \textbf{Continuous Current (mA)} \\
+\textbf{Component} & \textbf{Part Number} & \textbf{Peak I (mA)} & \textbf{Continuous I (mA)} & \textbf{Sleep I ($\mu$A)\footnote{The sleep mode current is with the LoRA RX off (the receiver has no passive receive sleep mode. But with enabled BLE passive RX. There is a Channel Activity Detection (CAD) module implemented in the SX12xx series devices, but the use thereof is not implemented by \textit{meshtastic} for sleeping)}} \\
 \hline
-BLE & STM32WB05xN & 100 & 25 \\
+BLE & STM32WB05xN & 5.6 & 4.950 & 0.8\footnote{Wake on BLE Mode} \\
 \hline
-MCU & \multirow{2}{*}{STM32WLE5} & 100 & 25 \\
-\cline{1-1}\cline{3-4}
-RF Transceiver &   & 95 & 15 \\
+MCU & \multirow{2}{*}{STM32WLE5} & 5.70\footnote{LDO Mode, Range 1} & 0.011\footnote{LPSleep Mode, Flash OFF} & 0.935 \\
+\cline{1-1}\cline{3-5} RF Transceiver &  & 12\footnote{TX Current Draw} & 5.3\footnote{RX Current Draw} & 0.6\footnote{OFF Current draw (config retained)} \\
 \hline
-RF Frontend & SKY66122 & 500 & 50 \\
-\hline
-Battery Charger & BQ25887 & 200 & 5 \\
-\hline
-USB-PD & STUSB4500 & 30 & 8 \\
-\hline
-USB-C & Generic & 10 & 2 \\
-\hline
-USB to Serial & CP2102 & 80 & 20 \\
+RF Frontend & SKY66122 & 640 & 6.5 & 0.05 \\
 \Xhline{5\arrayrulewidth}
-\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{150 mA} &  \textbf{150 mA} \\
+\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{663.3 mA} & \textbf{16.76 mA} & \textbf{2.385 $\mu$A} \\
 \hline
 
 \end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[h]
+\begin{minipage}{\textwidth}
+\centering
+\caption*{Option B}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Component} & \textbf{Part Number} & \textbf{Peak I (mA)} & \textbf{Continuous I (mA)} & \textbf{Sleep I ($\mu$A)} \\
+\hline
+BLE & \multirow{2}{*}{nRF52840} & 6.4 & 6.26 & 2.35\footnote{System ON, full 256 kB RAM retention, wake on any event} \\
+\cline{1-1}\cline{3-5}
+MCU &  & 6.3\footnote{LDO Mode} & 0.01737\footnote{System ON, full 256 kB RAM retention, wake on GPIOTE input (event mode)} & 0.935 \\
+\hline
+RF Transceiver & SX1261 & 12 & 5.3 & 0.6 \\
+\hline
+RF Frontend & SKY66122 & 640 & 6.5 & 0.05 \\
+\Xhline{5\arrayrulewidth}
+\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{664.7 mA} & \textbf{18.08 mA} & \textbf{3.935 $\mu$A} \\
+\hline
+
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[h]
+\begin{minipage}{\textwidth}
+\centering
+\caption*{Option C-1}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Component} & \textbf{Part Number} & \textbf{Peak I (mA)} & \textbf{Continuous I (mA)} & \textbf{Sleep I ($\mu$A)} \\
+\hline
+BLE & \multirow{2}{*}{ESP32-C3} & & &  \\
+\cline{1-1}\cline{3-5}
+MCU &  &  &  &  \\
+\hline
+RF Transceiver & SX1261 & 12 & 5.3 & 0.6 \\
+\hline
+RF Frontend & SKY66122 & 640 & 6.5 & 0.05 \\
+\Xhline{5\arrayrulewidth}
+\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{664.7 mA} & \textbf{18.08 mA} & \textbf{3.935 $\mu$A} \\
+\hline
+
+\end{tabular}
+\end{minipage}
+\end{table}
+
+\begin{table}[h]
+\begin{minipage}{\textwidth}
+\centering
+\caption*{Option C-2}
+\begin{tabular}{|l|c|c|c|c|}
+\hline
+\textbf{Component} & \textbf{Part Number} & \textbf{Peak I (mA)} & \textbf{Continuous I (mA)} & \textbf{Sleep I ($\mu$A)} \\
+\hline
+BLE & \multirow{2}{*}{ESP32-C3} & & &  \\
+\cline{1-1}\cline{3-5}
+MCU &  &  &  &  \\
+\hline
+RF Transceiver & SX1261 & 12 & 5.3 & 0.6 \\
+\hline
+RF Frontend & SKY66122 & 640 & 6.5 & 0.05 \\
+\Xhline{5\arrayrulewidth}
+\multicolumn{2}{|c|}{\textbf{Total}} & \textbf{664.7 mA} & \textbf{18.08 mA} & \textbf{3.935 $\mu$A} \\
+\hline
+
+\end{tabular}
+\end{minipage}
 \end{table}
 
 \newpage
